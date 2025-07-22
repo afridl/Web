@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Aleš F</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-purple: #691288;
+            --dark-navy: #17255A;
+            --bright-cyan: #1AC8ED;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --dark-gray: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background: linear-gradient(135deg, var(--light-gray) 0%, #e8f4f8 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: calc(100% - 2rem);
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 2rem;
+            padding: 0.8rem 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-purple);
+            text-decoration: none;
+            background: linear-gradient(45deg, var(--primary-purple), var(--bright-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+        }
+
+        .nav-item a {
+            color: var(--dark-navy);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-item a:hover {
+            background: rgba(26, 200, 237, 0.1);
+            color: var(--primary-purple);
+        }
+
+        .nav-item a.active {
+            background: rgba(26, 200, 237, 0.2);
+            color: var(--primary-purple);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 6rem;
+            padding: 0 1rem;
+        }
+
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+            min-height: 80vh;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Úvod Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 2rem 0;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--primary-purple);
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary-purple), var(--bright-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--dark-navy);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--primary-purple), var(--bright-cyan));
+            color: white;
+            text-decoration: none;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(105, 18, 136, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(105, 18, 136, 0.4);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-card h3 {
+            color: var(--primary-purple);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .project-card p {
+            color: var(--dark-navy);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tech {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tech-tag {
+            background: rgba(26, 200, 237, 0.1);
+            color: var(--primary-purple);
+            padding: 0.3rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(26, 200, 237, 0.3);
+        }
+
+        /* Contact Section */
+        .contact-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2rem;
+            padding: 3rem 2rem;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .contact-info h2 {
+            color: var(--primary-purple);
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: rgba(26, 200, 237, 0.1);
+            color: var(--primary-purple);
+            text-decoration: none;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+            min-width: 250px;
+            justify-content: center;
+        }
+
+        .contact-link:hover {
+            background: rgba(26, 200, 237, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 4rem;
+            color: var(--dark-navy);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .navbar {
+                width: auto;
+                min-width: 500px;
+                padding: 1rem 2rem;
+            }
+
+            .nav-menu {
+                gap: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-links {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .hero {
+                padding: 6rem 2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section.active {
+            animation: fadeInUp 0.6s ease;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary-purple);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 767px) {
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(15px);
+                border-radius: 1rem;
+                margin-top: 0.5rem;
+                padding: 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
+                display: none;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .contact-link {
+                min-width: auto;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showSection('uvod')">AF</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="#" onclick="showSection('uvod')" class="nav-link active">Úvod</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" onclick="showSection('projekty')" class="nav-link">Projekty</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" onclick="showSection('kontakt')" class="nav-link">Kontakt</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Úvod Section -->
+        <section id="uvod" class="section active">
+            <div class="hero">
+                <h1>Aleš F</h1>
+                <p>Vítejte na mém portfoliu. Zde najdete přehled mých projektů a dovedností.</p>
+                <a href="#" class="cta-button" onclick="showSection('projekty')">Prohlédnout projekty</a>
+            </div>
+            
+            <div style="padding: 2rem; max-width: 800px; margin: 0 auto; text-align: center;">
+                <h2 style="color: var(--primary-purple); margin-bottom: 2rem;">O mně</h2>
+                <p style="font-size: 1.1rem; color: var(--dark-navy); line-height: 1.8;">
+                    Jsem kreativní profesionál se zaměřením na moderní webové technologie a design. 
+                    Specializuji se na vytváření uživatelsky přívětivých aplikací a elegantních řešení 
+                    pro digitální prostředí.
+                </p>
+            </div>
+        </section>
+
+        <!-- Projekty Section -->
+        <section id="projekty" class="section">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="color: var(--primary-purple); font-size: 2.5rem; margin-bottom: 1rem;">Moje projekty</h2>
+                <p style="color: var(--dark-navy); font-size: 1.1rem;">Přehled vybraných prací a realizací</p>
+            </div>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Webová aplikace</h3>
+                    <p>Moderní responsivní webová aplikace s pokročilými funkcionalitami a elegantním designem.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">CSS3</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <h3>E-commerce řešení</h3>
+                    <p>Kompletní e-commerce platforma s pokročilými funkcemi pro správu objednávek a plateb.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Next.js</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <h3>Mobilní aplikace</h3>
+                    <p>Cross-platform mobilní aplikace s intuitivním uživatelským rozhraním a offline funkcionalitou.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">React Native</span>
+                        <span class="tech-tag">Redux</span>
+                        <span class="tech-tag">Firebase</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kontakt Section -->
+        <section id="kontakt" class="section">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>Kontaktujte mě</h2>
+                    <p style="color: var(--dark-navy); margin-bottom: 2rem;">
+                        Máte projekt nebo zajímavou nabídku? Rád si s vámi promluvím.
+                    </p>
+                </div>
+                
+                <div class="contact-links">
+                    <a href="mailto:ales@example.com" class="contact-link">
+                        <span>📧</span>
+                        <span>ales@example.com</span>
+                    </a>
+                    <a href="tel:+420123456789" class="contact-link">
+                        <span>📱</span>
+                        <span>+420 123 456 789</span>
+                    </a>
+                    <a href="https://linkedin.com/in/ales-f" class="contact-link" target="_blank">
+                        <span>💼</span>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://github.com/ales-f" class="contact-link" target="_blank">
+                        <span>🔗</span>
+                        <span>GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Aleš F. Všechna práva vyhrazena.</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Close mobile menu
+            document.getElementById('navMenu').classList.remove('active');
+        }
+        
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navbar = document.querySelector('.navbar');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (!navbar.contains(event.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+        
+        // Smooth scroll behavior for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+            });
+        });
+    </script>
+</body>
+</html>
